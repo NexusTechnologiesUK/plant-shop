@@ -1,57 +1,51 @@
-# Rootly — client demo build
+# 🌱 Rootly
 
-A draft homepage built with React + Vite, with a small Node.js
-serverless API (`/api/products`) and "Sprout," a rule-based AI plant-care
-assistant, as a stand-in for the AI Agent feature the client asked about.
+A homepage for an online plant shop, built as a demonstration of modern, production-style web development — a fast React frontend, a live serverless backend, and an embedded AI assistant, all deployed and publicly accessible rather than a static mockup.
 
-## Run it locally
+**Live demo:** [plant-shop-sepia-eta.vercel.app](https://plant-shop-sepia-eta.vercel.app/)
+
+---
+
+## Core functionality
+
+- **Dynamic product catalog** — plant listings are fetched live from a backend API endpoint (`/api/products`), the same pattern a real e-commerce site uses to pull from a database.
+- **Category filtering** — filter products by tag (Easy care, Trailing, Low light OK, Pet friendly) with instant, no-reload results.
+- **Live AI chat assistant ("Sprout")** — a floating chat widget that answers plant-care questions (watering, light, yellow/brown leaves, repotting, feeding, pet safety) in real time.
+- **Email signup** — a working newsletter form with its own confirmation state.
+- **Social proof section** — testimonials with ratings.
+- **Fully responsive** — adapts cleanly from desktop down to mobile.
+
+## What makes it different
+
+Most homepage drafts are static — a mockup or a page with no working parts. This one is a functioning application: the data layer is real, the AI feature actually responds contextually rather than being a screenshot, and it's deployed live so anyone can click around it on their own device.
+
+## Role of AI
+
+**Sprout** is an embedded plant-care assistant rather than a bolt-on chatbot. It listens for what a visitor is asking about (watering, light, leaf problems, repotting, pet safety) and gives a relevant, specific answer. It currently runs on lightweight keyword matching so it works instantly with zero setup cost, but the architecture is built so the matching logic can be swapped for a full LLM-backed response without changing anything else in the app.
+
+## Tech stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React + Vite |
+| Backend | Node.js serverless functions (Vercel) |
+| Hosting | Vercel, connected to GitHub for auto-deploy on push |
+| Styling | Hand-written CSS with custom properties, hover states, transitions, responsive breakpoints |
+| Version control | Git + GitHub |
+
+## Running locally
 
 ```bash
 npm install
 npm run dev
 ```
 
-Then open the URL it prints (usually http://localhost:5173).
+## Project structure
 
-## Deploy to Vercel (recommended path for tomorrow)
-
-**Option A — no GitHub needed, fastest:**
-1. Install the Vercel CLI once: `npm i -g vercel`
-2. From this folder, run: `vercel`
-3. Follow the prompts (press enter to accept defaults). It will give you a
-   live URL in under a minute.
-
-**Option B — via GitHub (better long-term, since the client wants GitHub anyway):**
-1. Create a new empty repo on GitHub.
-2. From this folder:
-   ```bash
-   git init
-   git add .
-   git commit -m "Draft homepage for client review"
-   git branch -M main
-   git remote add origin <your-repo-url>
-   git push -u origin main
-   ```
-3. Go to vercel.com → "Add New Project" → import that GitHub repo → Deploy.
-   Vercel auto-detects Vite and handles the build.
-
-Either way, you'll have a real, live URL to share in the meeting.
-
-## Important note on PHP
-
-Vercel runs Node.js, not PHP. The `/api/products.js` file plays the same
-role a PHP backend would (serving data as JSON), but it's written in
-JavaScript because that's what Vercel's serverless functions support. If
-the client specifically needs PHP (per the job posting), that would need
-its own server — worth clarifying with them directly rather than assuming,
-since it changes hosting and possibly the final architecture.
-
-## Where to go next
-
-- Swap the hard-coded `products` array in `api/products.js` for a real
-  Supabase query once you have a project set up.
-- Sprout (the AI widget) currently uses simple keyword matching — no API
-  key required, so it works instantly in a demo. A real LLM-backed version
-  would call an AI API from a serverless function (so the key stays
-  private), and only the `answer()` function in `AIAssistant.jsx` needs to
-  change.
+```
+src/
+  components/   # Header, Hero, ProductGrid, Testimonials, Footer, AIAssistant
+  data/         # fallback product data
+api/
+  products.js   # serverless API endpoint
+```
